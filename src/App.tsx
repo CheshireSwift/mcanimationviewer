@@ -11,15 +11,34 @@ export const App = () => {
   const [width, setWidth] = React.useState(0)
   const [scale, setScale] = React.useState(4)
   const [fallbackFrameCount, setFallbackFrameCount] = React.useState(0)
+  const [error, setError] = React.useState<string>()
   const totalWidth = width * 2 * scale + gapBetweenImages + rulerWidth * 1.5
 
   React.useEffect(() => {
     if (filename) {
       fetch(`/workspace/${filename}.png.mcmeta`)
-        .then((response) => response.json())
+        .catch((e: Error) => setError('Request error: ' + e.message))
+        .then((response) => {
+          if (!response) {
+            return
+          }
+
+          return response.text().then((text) => {
+            try {
+              return JSON.parse(text)
+            } catch (e) {
+              setError('Parse error: ' + e.message + '\nData:\n' + text)
+            }
+          })
+        })
         .then(setMeta)
+        .catch((e: Error) => setError(e.message))
     }
   }, [filename])
+
+  if (error) {
+    return <pre>Error: {error}</pre>
+  }
 
   const animationUrl = `/workspace/${filename}.png`
 
