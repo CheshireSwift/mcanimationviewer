@@ -62,15 +62,19 @@ export const Animation = ({
           backgroundPositionY: backgroundYForIndex(frameIndex),
         }}
       />
-      <div
-        style={{
-          ...divStyling,
-          backgroundPositionY: backgroundYForIndex(successorIndex(frameIndex)),
-          animationName: includeFade && 'fadein',
-          opacity: includeFade ? 0 : 1,
-          animationDuration: frameSequence[frameIndex].time * 50 + 'ms',
-        }}
-      />
+      {interpolate && (
+        <div
+          style={{
+            ...divStyling,
+            backgroundPositionY: backgroundYForIndex(
+              successorIndex(frameIndex)
+            ),
+            animationName: includeFade && 'fadein',
+            opacity: includeFade ? 0 : 1,
+            animationDuration: frameSequence[frameIndex].time * 50 + 'ms',
+          }}
+        />
+      )}
       <div style={{ position: 'absolute', top: width, left: 0, width }}>
         <p>
           {frameIndex} for {frameSequence[frameIndex].time}t
