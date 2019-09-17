@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "format": "prettier --write **/*.ts **/*.tsx",
-    "prestart": "rimraf dist",
+    "prestart": "rimraf .cache dist",
     "start": "parcel index.html workspace/**/*",
     "test": "jest"
   },

@@ -43,9 +43,16 @@ export const App = () => {
   const animationUrl = `/workspace/${filename}.png`
 
   return !meta ? (
-    'Loading...'
+    <div>'Loading...'</div>
   ) : (
-    <div style={{ margin: 'auto', width: totalWidth }}>
+    <div
+      style={{
+        margin: 'auto',
+        width: totalWidth,
+        fontSize: 16,
+        fontFamily: 'Fira Code,Courier New,Menlo,monospace',
+      }}
+    >
       <div style={{ textAlign: 'right', padding: 4 }}>
         Scale:{' '}
         <input
