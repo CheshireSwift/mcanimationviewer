@@ -43,7 +43,7 @@ export const App = () => {
   const animationUrl = `/workspace/${filename}.png`
 
   return !meta ? (
-    <div>'Loading...'</div>
+    <div>Loading...</div>
   ) : (
     <div
       style={{

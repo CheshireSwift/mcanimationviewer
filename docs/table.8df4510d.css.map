@@ -1,0 +1,1 @@
+{"version":3,"sources":["table.css"],"names":[],"mappings":"AAAA,iBACE,0BACF","file":"table.8df4510d.css","sourceRoot":"..","sourcesContent":["tr:nth-child(even) {\r\n  background: #00000010;\r\n}\r\n"]}

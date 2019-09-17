@@ -1,6 +1,8 @@
 import React from 'react'
 import ProgressBar from './ProgressBar'
 
+const tableRems = 40
+
 export const FrameSequenceTable = ({
   frameSequence,
   currentIndex,
@@ -30,6 +32,9 @@ export const FrameSequenceTable = ({
           margin: '0.25rem',
           cursor: 'pointer',
         }}
+        title={
+          expanded ? 'Collapse to even rows' : 'Expand to proportional rows'
+        }
         onClick={() => {
           setExpanded(!expanded)
         }}
@@ -39,7 +44,7 @@ export const FrameSequenceTable = ({
       <table
         style={{
           width: '100%',
-          height: expanded && '40rem',
+          height: expanded && tableRems + 'rem',
           borderLeft: '1px solid black',
         }}
       >
@@ -61,6 +66,17 @@ export const FrameSequenceTable = ({
   )
 }
 
+const fontSizeForPercentage = (percentage: number) =>
+  Math.min(
+    percentage *
+    0.01 * // percentage to proportion 0..1
+    tableRems *
+    16 * // pixels per rem
+      0.5, // halving the total number of pixels available gets a reasonable font size
+
+    16 // capped at 16
+  )
+
 const FrameSequenceRow = ({
   frame,
   index,
@@ -77,7 +93,6 @@ const FrameSequenceRow = ({
   onClick?: () => void
 }) => {
   const color = isCurrentFrame ? 'black' : isNextFrame ? 'gray' : 'lightgray'
-  const fontSize = percentage && Math.min(16, percentage * 16 * 40 * 0.01 * 0.5)
 
   return (
     <tr
@@ -86,9 +101,13 @@ const FrameSequenceRow = ({
         color,
         height: percentage && `${percentage}%`,
         overflow: 'none',
-        fontSize,
+        fontSize: percentage && fontSizeForPercentage(percentage),
       }}
       onClick={onClick}
+      title={
+        (percentage ? `[${index}]:${frame.index},${frame.time}t; ` : '') +
+        `Frameset entry [${index}] uses animation frame ${frame.index}, displaying it for ${frame.time} ticks`
+      }
     >
       <td>[{index}]:</td>
       <td style={{ position: 'relative', paddingRight: '0.5rem' }}>
