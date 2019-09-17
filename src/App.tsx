@@ -71,7 +71,13 @@ export const App = () => {
           style={{ width: '2rem' }}
         />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '1rem',
+        }}
+      >
         {fallbackFrameCount && (
           <Animation
             image={animationUrl}

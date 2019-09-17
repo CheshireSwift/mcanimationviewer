@@ -8,12 +8,22 @@
   }
 }
 
-@keyframes grow {
+@keyframes widen {
   from {
     width: 0;
   }
 
   to {
     width: 100%;
+  }
+}
+
+@keyframes heighten {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
   }
 }

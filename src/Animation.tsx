@@ -1,4 +1,5 @@
 import React from 'react'
+import ProgressBar from './ProgressBar'
 
 export const Animation = ({
   image,
@@ -94,12 +95,13 @@ export const Animation = ({
         </>
       )}
       <div style={{ position: 'absolute', top: width, left: 0 }}>
-        <div style={{ paddingTop: '0.5rem' }}>
-          {frameIndex}: {frameSequence[frameIndex].index},
+        <div style={{ paddingTop: '0.5rem', position: 'relative' }}>
+          [{frameIndex}]: {frameSequence[frameIndex].index},
           {frameSequence[frameIndex].time}t
           <ProgressBar
             active={applyAnimationClasses}
             duration={frameSequence[frameIndex].time}
+            style={{ position: 'relative', width: '100%' }}
           />
         </div>
         <div style={{ paddingTop: '0.5rem' }}>
@@ -151,53 +153,19 @@ const AnimationTableRow = ({
       }}
       onClick={onClick}
     >
-      <td>{index}:</td>
-      <td>
+      <td>[{index}]:</td>
+      <td style={{ position: 'relative', paddingRight: '0.5rem' }}>
         {frame.index},{frame.time}t
         <ProgressBar
           active={isCurrentFrame}
           duration={frame.time}
           color={color}
+          vertical
+          style={{ position: 'absolute', right: 0, top: 0, bottom: 0 }}
         />
       </td>
     </tr>
   )
 }
-
-const height = '0.25rem'
-const ProgressBar = ({
-  active = true,
-  duration,
-  color = 'black',
-}: {
-  active?: boolean
-  duration: number
-  color?: string
-}) => (
-  <div style={{ position: 'relative', height }}>
-    <div
-      style={{
-        position: 'absolute',
-        height,
-        width: '100%',
-        border: '1px solid ' + color,
-        boxSizing: 'border-box',
-      }}
-    />
-    {active && (
-      <div
-        style={{
-          position: 'absolute',
-          height,
-          width: 0,
-          animationName: active && 'grow',
-          animationDuration: duration * 50 + 'ms',
-          animationTimingFunction: 'linear',
-          backgroundColor: color,
-        }}
-      />
-    )}
-  </div>
-)
 
 export default Animation
