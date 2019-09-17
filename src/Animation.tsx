@@ -1,5 +1,6 @@
 import React from 'react'
 import ProgressBar from './ProgressBar'
+import FrameSequenceTable from './FrameSequenceTable'
 
 export const Animation = ({
   image,
@@ -95,77 +96,48 @@ export const Animation = ({
         </>
       )}
       <div style={{ position: 'absolute', top: width, left: 0 }}>
-        <div style={{ paddingTop: '0.5rem', position: 'relative' }}>
-          [{frameIndex}]: {frameSequence[frameIndex].index},
-          {frameSequence[frameIndex].time}t
-          <ProgressBar
-            active={applyAnimationClasses}
-            duration={frameSequence[frameIndex].time}
-            style={{ position: 'relative', width: '100%' }}
-          />
-        </div>
-        <div style={{ paddingTop: '0.5rem' }}>
-          (Next {frameSequence[successorIndex(frameIndex)].index})
-        </div>
-        <table>
-          <tbody>
-            {frameSequence.map((frame, index) => (
-              <AnimationTableRow
-                key={index}
-                frame={frame}
-                index={index}
-                isCurrentFrame={index === frameIndex}
-                isNextFrame={
-                  interpolate && index === successorIndex(frameIndex)
-                }
-                onClick={() => {
-                  clearTimeouts()
-                  advanceFrame(index - 1)()
-                }}
-              />
-            ))}
-          </tbody>
-        </table>
+        <FrameInfo
+          index={frameIndex}
+          frame={frameSequence[frameIndex]}
+          nextFrame={frameSequence[successorIndex(frameIndex)]}
+          active={applyAnimationClasses}
+        />
+        <FrameSequenceTable
+          frameSequence={frameSequence}
+          currentIndex={frameIndex}
+          nextIndex={interpolate && successorIndex(frameIndex)}
+          onClickRow={(index) => {
+            clearTimeouts()
+            advanceFrame(index - 1)()
+          }}
+        />
       </div>
     </div>
   )
 }
 
-const AnimationTableRow = ({
-  frame,
+const FrameInfo = ({
   index,
-  isCurrentFrame,
-  isNextFrame,
-  onClick,
+  frame,
+  nextFrame,
+  active,
 }: {
-  frame: Frame
   index: number
-  isCurrentFrame: boolean
-  isNextFrame: boolean
-  onClick?: () => void
-}) => {
-  const color = isCurrentFrame ? 'black' : isNextFrame ? 'gray' : 'lightgray'
-  return (
-    <tr
-      style={{
-        padding: '0.5rem',
-        color,
-      }}
-      onClick={onClick}
-    >
-      <td>[{index}]:</td>
-      <td style={{ position: 'relative', paddingRight: '0.5rem' }}>
-        {frame.index},{frame.time}t
-        <ProgressBar
-          active={isCurrentFrame}
-          duration={frame.time}
-          color={color}
-          vertical
-          style={{ position: 'absolute', right: 0, top: 0, bottom: 0 }}
-        />
-      </td>
-    </tr>
-  )
-}
+  frame: Frame
+  nextFrame: Frame
+  active: boolean
+}) => (
+  <>
+    <div style={{ paddingTop: '0.5rem', position: 'relative' }}>
+      [{index}]: {frame.index},{frame.time}t
+      <ProgressBar
+        style={{ position: 'relative', width: '100%' }}
+        active={active}
+        duration={frame.time}
+      />
+    </div>
+    <div style={{ paddingTop: '0.5rem' }}>(Next {nextFrame.index})</div>
+  </>
+)
 
 export default Animation

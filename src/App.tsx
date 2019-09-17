@@ -53,23 +53,25 @@ export const App = () => {
         fontFamily: 'Fira Code,Courier New,Menlo,monospace',
       }}
     >
-      <div style={{ textAlign: 'right', padding: 4 }}>
-        Scale:{' '}
-        <input
-          type="number"
-          value={scale}
-          onChange={(e) => setScale(e.target.valueAsNumber)}
-          style={{ width: '2rem' }}
-        />
-      </div>
-      <div style={{ textAlign: 'right', padding: 4 }}>
-        Size:{' '}
-        <input
-          type="number"
-          value={width}
-          onChange={(e) => setWidth(e.target.valueAsNumber)}
-          style={{ width: '2rem' }}
-        />
+      <div style={{ position: 'absolute', bottom: '1rem', right: '1rem' }}>
+        <div style={{ textAlign: 'right', padding: 4 }}>
+          Scale:{' '}
+          <input
+            type="number"
+            value={scale}
+            onChange={(e) => setScale(e.target.valueAsNumber)}
+            style={{ width: '2rem' }}
+          />
+        </div>
+        <div style={{ textAlign: 'right', padding: 4 }}>
+          Size:{' '}
+          <input
+            type="number"
+            value={width}
+            onChange={(e) => setWidth(e.target.valueAsNumber)}
+            style={{ width: '2rem' }}
+          />
+        </div>
       </div>
       <div
         style={{
