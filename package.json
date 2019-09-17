@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prebuild-example": "rimraf .cache docs",
-    "build-example": "parcel build -d docs index.html workspace/energised_acacia.*",
+    "build-example": "parcel build -d docs --public-url ./ index.html workspace/energised_acacia.*",
     "format": "prettier --write **/*.ts **/*.tsx",
     "prestart": "rimraf .cache dist",
     "start": "parcel index.html workspace/**/*",
