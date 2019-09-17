@@ -95,11 +95,18 @@ export const Animation = ({
           />
         </>
       )}
-      <div style={{ position: 'absolute', top: width, left: 0 }}>
+      <div
+        style={{
+          position: 'absolute',
+          top: width,
+          left: 0,
+          right: '1rem',
+        }}
+      >
         <FrameInfo
           index={frameIndex}
           frame={frameSequence[frameIndex]}
-          nextFrame={frameSequence[successorIndex(frameIndex)]}
+          nextFrame={interpolate && frameSequence[successorIndex(frameIndex)]}
           active={applyAnimationClasses}
         />
         <FrameSequenceTable
@@ -124,11 +131,11 @@ const FrameInfo = ({
 }: {
   index: number
   frame: Frame
-  nextFrame: Frame
+  nextFrame: Frame | false
   active: boolean
 }) => (
   <>
-    <div style={{ paddingTop: '0.5rem', position: 'relative' }}>
+    <div style={{ paddingTop: '0.5rem', position: 'relative', width: '100%' }}>
       [{index}]: {frame.index},{frame.time}t
       <ProgressBar
         style={{ position: 'relative', width: '100%' }}
@@ -136,7 +143,9 @@ const FrameInfo = ({
         duration={frame.time}
       />
     </div>
-    <div style={{ paddingTop: '0.5rem' }}>(Next {nextFrame.index})</div>
+    {nextFrame && (
+      <div style={{ paddingTop: '0.5rem' }}>(Next {nextFrame.index})</div>
+    )}
   </>
 )
 
