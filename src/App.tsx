@@ -72,15 +72,17 @@ export const App = () => {
         />
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Animation
-          image={animationUrl}
-          width={scale * width}
-          frameSequence={generateFrameSequence(
-            meta.animation,
-            fallbackFrameCount
-          )}
-          interpolate={meta.animation.interpolate || false}
-        />
+        {fallbackFrameCount && (
+          <Animation
+            image={animationUrl}
+            width={scale * width}
+            frameSequence={generateFrameSequence(
+              meta.animation,
+              fallbackFrameCount
+            )}
+            interpolate={meta.animation.interpolate || false}
+          />
+        )}
         <div style={{ display: 'flex', width: scale * width + rulerWidth }}>
           <div>
             {Array.from({ length: fallbackFrameCount }).map((_, i) => (
