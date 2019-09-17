@@ -16,7 +16,7 @@ export const App = () => {
 
   React.useEffect(() => {
     if (filename) {
-      fetch(`/workspace/${filename}.png.mcmeta`)
+      fetch(`./workspace/${filename}.png.mcmeta`)
         .catch((e: Error) => setError('Request error: ' + e.message))
         .then((response) => {
           if (!response) {
@@ -40,7 +40,7 @@ export const App = () => {
     return <pre>Error: {error}</pre>
   }
 
-  const animationUrl = `/workspace/${filename}.png`
+  const animationUrl = `./workspace/${filename}.png`
 
   return !meta ? (
     <div>Loading...</div>
